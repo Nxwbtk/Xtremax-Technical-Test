@@ -1,5 +1,5 @@
 provider "aws" {
-  region = var.aws_region
+  region                      = var.aws_region
   skip_credentials_validation = true
   skip_requesting_account_id  = true
   skip_metadata_api_check     = true
@@ -8,11 +8,29 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "./modules/vpc"
-  cidr_block = var.vpc_cidr_block
-  vpc_cidr_pool = var.vpc_cidr_pool
+  source             = "./modules/vpc"
+  vpc_cidr_pool      = var.vpc_cidr_pool
+  public_cidr_block  = var.public_cidr_block
+  private_cidr_block = var.private_cidr_block
+}
+
+module "iam_instance_profile" {
+  source                = "./modules/iam"
+  instance_profile_name = var.instance_profile_name
 }
 
 module "ec2" {
-  source = "./modules/ec2"
+  source                = "./modules/ec2"
+  image_id              = var.image_id
+  instance_type         = var.instance_type
+  iam_instantce_profile = var.instance_profile_name
+  subnet_ids            = var.subnet_ids
 }
+
+
+# module "rds" {
+#   source        = "./modules/rds"
+#   vpc_id        = module.vpc.vpc_id
+#   allowed_cidrs = module.vpc.private_subnet_id
+#   subnet_ids    = []
+# }
