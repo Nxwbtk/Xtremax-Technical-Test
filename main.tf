@@ -19,10 +19,11 @@ module "iam_instance_profile" {
   instance_profile_name = var.instance_profile_name
 }
 module "alb" {
-  source     = "./modules/alb"
-  subnet_ids = module.vpc.public_subnet_ids
-  vpc_id     = module.vpc.vpc_id
-  ec2_sg_id  = module.ec2.ec2_sg_id
+  source              = "./modules/alb"
+  subnet_ids          = module.vpc.public_subnet_ids
+  vpc_id              = module.vpc.vpc_id
+  ec2_sg_id           = module.ec2.ec2_sg_id
+  acm_certificate_arn = var.acm_certificate_arn
 }
 
 module "ec2" {
@@ -34,8 +35,6 @@ module "ec2" {
   vpc_id                = module.vpc.vpc_id
   target_group_arn      = module.alb.target_group_arn
 }
-
-
 
 module "rds" {
   source                = "./modules/rds"
@@ -49,5 +48,9 @@ module "rds" {
   db_password           = var.db_password
   db_port               = var.db_port
   ec2_security_group_id = module.ec2.ec2_sg_id
+}
 
+module "cloudfront" {
+  source       = "./modules/cloudfront"
+  alb_dns_name = module.alb.alb_dns_name
 }

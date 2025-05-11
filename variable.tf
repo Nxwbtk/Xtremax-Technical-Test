@@ -75,3 +75,8 @@ variable "db_identifier" {
   description = "The identifier for the RDS instance"
   default     = "mysql-school"
 }
+
+variable "acm_certificate_arn" {
+  description = "ACM certificate ARN for HTTPS listener"
+  type        = string
+}

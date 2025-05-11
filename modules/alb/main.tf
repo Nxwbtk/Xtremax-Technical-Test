@@ -59,3 +59,25 @@ resource "aws_lb_listener" "wordpress_http" {
     target_group_arn = aws_lb_target_group.wordpress_target_group.arn
   }
 }
+
+
+resource "aws_acm_certificate" "wordpress_cert" {
+  domain_name       = "wordpress.example.com"
+  validation_method = "DNS"
+
+  tags = {
+    Name = "wordpress-cert"
+  }
+}
+resource "aws_lb_listener" "wordpress_https" {
+  load_balancer_arn = aws_lb.wordpress_alb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.acm_certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.wordpress_target_group.arn
+  }
+}
