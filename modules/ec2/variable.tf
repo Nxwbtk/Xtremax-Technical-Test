@@ -19,3 +19,14 @@ variable "subnet_ids" {
   type        = list(string)
   description = "List of subnet IDs for ASG"
 }
+
+
+variable "vpc_id" {
+  type        = string
+  description = "The ID of the VPC"
+}
+
+variable "target_group_arn" {
+  description = "The ARN of the target group for the ALB"
+  type        = string
+}

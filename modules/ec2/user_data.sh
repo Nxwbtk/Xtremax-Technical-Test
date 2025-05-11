@@ -1,6 +1,6 @@
 #!/bin/bash
 yum update -y
-yum install -y httpd mariadb-server php php-mysqlnd wget unzip
+yum install -y httpd php php-mysqlnd wget unzip
 systemctl enable httpd
 systemctl start httpd
 
