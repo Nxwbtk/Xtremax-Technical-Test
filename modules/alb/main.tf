@@ -63,8 +63,6 @@ resource "aws_lb_listener" "wordpress_https" {
   }
 }
 
-
-
 resource "aws_acm_certificate" "wordpress_cert" {
   domain_name       = "wordpress.example.com"
   validation_method = "DNS"
@@ -73,4 +71,3 @@ resource "aws_acm_certificate" "wordpress_cert" {
     Name = "wordpress-cert"
   }
 }
-
