@@ -23,11 +23,6 @@ variable "instance_profile_name" {
   type        = string
 }
 
-variable "subnet_ids" {
-  type        = list(string)
-  description = "List of subnet IDs for ASG"
-}
-
 variable "public_cidr_block" {
   description = "The CIDR block for the public subnet"
   type        = string
