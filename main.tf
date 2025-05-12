@@ -39,7 +39,7 @@ module "ec2" {
 module "rds" {
   source                = "./modules/rds"
   vpc_id                = module.vpc.vpc_id
-  allowed_cidrs         = module.vpc.private_subnet_ids
+  allowed_cidrs         = module.vpc.private_subnet_cidrs
   subnet_ids            = module.vpc.private_subnet_ids
   db_identifier         = var.db_identifier
   db_instance_class     = var.db_instance_class
