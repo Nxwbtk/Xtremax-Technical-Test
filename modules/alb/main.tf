@@ -49,6 +49,7 @@ resource "aws_lb_target_group" "wordpress_target_group" {
   }
 }
 
+
 resource "aws_lb_listener" "wordpress_https" {
   load_balancer_arn = aws_lb.wordpress_alb.arn
   port              = 443

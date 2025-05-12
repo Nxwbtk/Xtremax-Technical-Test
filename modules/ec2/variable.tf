@@ -25,8 +25,11 @@ variable "vpc_id" {
   type        = string
   description = "The ID of the VPC"
 }
+variable "sg_alb_id" {
+  type = string
+}
 
 variable "target_group_arn" {
-  description = "The ARN of the target group for the ALB"
   type        = string
+  description = "The ARN of the target group"
 }

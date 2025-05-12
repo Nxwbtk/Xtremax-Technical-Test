@@ -31,9 +31,10 @@ module "ec2" {
   image_id              = var.image_id
   instance_type         = var.instance_type
   iam_instantce_profile = var.instance_profile_name
-  subnet_ids            = module.vpc.public_subnet_ids
+  subnet_ids            = module.vpc.private_subnet_ids
   vpc_id                = module.vpc.vpc_id
-  target_group_arn      = module.alb.target_group_arn
+  sg_alb_id             = module.alb.alb_sg_id
+  target_group_arn      = module.alb.alb_target_group_arn
 }
 
 module "rds" {

@@ -11,10 +11,12 @@ resource "aws_security_group" "rds_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = var.db_port
-    to_port     = var.db_port
-    protocol    = "tcp"
-    cidr_blocks = var.allowed_cidrs
+    from_port = var.db_port
+    to_port   = var.db_port
+    protocol  = "tcp"
+    security_groups = [
+      var.ec2_security_group_id
+    ]
   }
 
   egress {
@@ -28,8 +30,6 @@ resource "aws_security_group" "rds_sg" {
     Name = "rds-mysql-sg"
   }
 }
-
-
 
 resource "aws_db_instance" "mysql-school" {
   identifier             = var.db_identifier
@@ -45,13 +45,4 @@ resource "aws_db_instance" "mysql-school" {
   db_subnet_group_name   = aws_db_subnet_group.school-db-subnet-group.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
-}
-
-resource "aws_security_group_rule" "rds_allow_ec2" {
-  type                     = "ingress"
-  from_port                = var.db_port
-  to_port                  = var.db_port
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.rds_sg.id
-  source_security_group_id = var.ec2_security_group_id
 }
